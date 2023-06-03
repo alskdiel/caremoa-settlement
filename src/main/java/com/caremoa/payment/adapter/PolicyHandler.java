@@ -7,22 +7,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.caremoa.payment.domain.model.Contract;
+import com.caremoa.payment.domain.model.Payment;
 import com.caremoa.payment.domain.service.ContractService;
+import com.caremoa.payment.domain.service.PaymentService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-/**
-* @packageName    : com.caremoa.settlement.adapter
-* @fileName       : PolicyHandler.java
-* @author         : 이병관
-* @date           : 2023.05.14
-* @description    : Cloud Stream 을 이용한 Pub/Sub 구현
-* ===========================================================
-* DATE              AUTHOR             NOTE
-* -----------------------------------------------------------
-* 2023.05.14        이병관       최초 생성
-*/
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
@@ -30,6 +21,7 @@ public class PolicyHandler {
 
 	private long errorOccur = 0;
 	private final ContractService contractService; 
+	private final PaymentService paymentService; 
 
     @Bean
     Consumer<ContractCompleted> basicConsumer() {
@@ -60,11 +52,6 @@ public class PolicyHandler {
     		//Contract contract = new Contract(contractId, memberId, helperId);
     		
     		//contractService.saveContract(contract);
-    		
-			//log.debug("계약정보 {}", contract);
-		//} catch (ApiException e) {
-		//	// TODO Auto-generated catch block
-		//	log.debug("{} : {}", e.getCode(), e.getMessage() );;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,16 +69,27 @@ public class PolicyHandler {
     		log.debug("ReflectionScore {}, {}, {}", contractId, memberId, helperId);
     		Contract contract = new Contract(contractId, memberId, helperId);
     		contractService.createContract(contract);
-			//log.debug("계약정보 {}", contract);
-		//} catch (ApiException e) {
-		//	// TODO Auto-generated catch block
-		//	log.debug("{} : {}", e.getCode(), e.getMessage() );;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
-
+    /**
+     * @methodName    : ReflectionScore
+     * @date          : 2023.05.19
+     * @description   : 점수반영
+     * @param paymentId
+    */
+    private void createPayment(Long contractId, Long memberId, Long helperId) {
+    	try {
+    		log.debug("ReflectionScore {}, {}, {}", contractId, memberId, helperId);
+    		Payment payment = new Payment();
+    		paymentService.createPayment(payment);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     /**
      * @methodName    : wheneverContracCompletedThenSaveContract
      * @date          : 2023.05.19
@@ -138,7 +136,7 @@ public class PolicyHandler {
         	return contractAccepted -> {
     		log.debug("Call contractAccepted : {}", contractAccepted.validate() );
     		if ( contractAccepted.validate() ) {
-    			createSettlement(contractAccepted.getContractId(), contractAccepted.getMemberId(), contractAccepted.getHelperId());
+    			createPayment(contractAccepted.getContractId(), contractAccepted.getMemberId(), contractAccepted.getHelperId());
     		}
     	};
     }

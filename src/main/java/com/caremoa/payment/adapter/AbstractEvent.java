@@ -8,17 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Data;
 
-/**
-* @packageName    : com.caremoa.member.adapter
-* @fileName       : AbstractEvent.java
-* @author         : 이병관
-* @date           : 2023.05.14
-* @description    : Event pub/sub 정의을 위한 부모클래스
-* ===========================================================
-* DATE              AUTHOR             NOTE
-* -----------------------------------------------------------
-* 2023.05.14        이병관       최초 생성
-*/
 @Data
 public class AbstractEvent {
 	private String eventType;
