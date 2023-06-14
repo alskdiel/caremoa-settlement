@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.caremoa.settlement.domain.dto.SettlementDto;
+import com.caremoa.settlement.domain.dto.Settlement8086Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,14 +26,14 @@ import lombok.Setter;
 @Data
 @AllArgsConstructor
 @Builder
-public class Settlement {
+public class Settlement8086 {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contract_id")
-    private Contract contract;
+    private Contract8086 contract;
 	
     private SettlementState settlementState;
     private Integer settledAmount;
@@ -42,8 +42,8 @@ public class Settlement {
 	private LocalDateTime paidDateTime;
 	private String memberId;
 
-	public SettlementDto toDto() {
-		SettlementDto settlementDto = new SettlementDto();
+	public Settlement8086Dto toDto() {
+		Settlement8086Dto settlementDto = new Settlement8086Dto();
 		settlementDto.setId(this.id);
 		settlementDto.setContract(this.contract.toDto());
 		settlementDto.setSettlementState(this.settlementState);

@@ -3,8 +3,8 @@ package com.caremoa.settlement.domain.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.caremoa.settlement.domain.dto.ContractDto;
-import com.caremoa.settlement.domain.model.Contract;
+import com.caremoa.settlement.domain.dto.Contract8086Dto;
+import com.caremoa.settlement.domain.model.Contract8086;
 import com.caremoa.settlement.domain.repository.ContractRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,8 +17,8 @@ public class ContractService {
 	private final ContractRepository contractRepository;
 	
 	@Transactional
-	public ContractDto createContract(ContractDto contractDto) throws Exception {
-        Contract savedContract = contractRepository.save(contractDto.toEntity());
+	public Contract8086Dto createContract(Contract8086Dto contractDto) throws Exception {
+        Contract8086 savedContract = contractRepository.save(contractDto.toEntity());
         return savedContract.toDto();
 	}
 	

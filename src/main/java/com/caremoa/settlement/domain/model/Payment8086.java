@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.caremoa.settlement.domain.dto.PaymentDto;
+import com.caremoa.settlement.domain.dto.Payment8086Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,14 +28,14 @@ import lombok.Setter;
 @Data
 @AllArgsConstructor
 @Builder
-public class Payment {
+public class Payment8086 {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contract_id")
-    private Contract contract;
+    private Contract8086 contract;
     
 	@Enumerated(EnumType.STRING)
 	private PaymentType paymentType;
@@ -51,8 +51,8 @@ public class Payment {
 	private LocalDateTime responseDateTime;
 	private String approveNo;
 
-	public PaymentDto toDto() {
-		PaymentDto paymentDto = new PaymentDto();
+	public Payment8086Dto toDto() {
+		Payment8086Dto paymentDto = new Payment8086Dto();
 		paymentDto.setId(this.id);
 		paymentDto.setContract(this.contract.toDto());
 		paymentDto.setPaymentType(this.paymentType);

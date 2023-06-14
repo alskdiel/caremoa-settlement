@@ -1,6 +1,6 @@
 package com.caremoa.settlement.domain.dto;
 
-import com.caremoa.settlement.domain.model.Contract;
+import com.caremoa.settlement.domain.model.Contract8086;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,17 +17,19 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-public class ContractDto {
+public class Contract8086Dto {
 
     private Long id;
     private Long memberId;
     private Long helperId;
+    private String helperName;
 	
-	public Contract toEntity() {
-		Contract contract = new Contract();
+	public Contract8086 toEntity() {
+		Contract8086 contract = new Contract8086();
 		contract.setId(this.id);
 		contract.setMemberId(this.memberId);
 		contract.setHelperId(this.helperId);
+		contract.setHelperName(this.helperName);
 		return contract;
 	}
 }

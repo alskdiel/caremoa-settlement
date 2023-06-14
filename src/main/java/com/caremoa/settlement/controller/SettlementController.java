@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.caremoa.settlement.domain.dto.SettlementDto;
+import com.caremoa.settlement.domain.dto.Settlement8086Dto;
 import com.caremoa.settlement.domain.service.SettlementService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,13 +25,13 @@ public class SettlementController {
 
 
     @GetMapping("/settlements")
-    public List<SettlementDto> getAllSettlements() {
+    public List<Settlement8086Dto> getAllSettlements() {
     	log.debug("getAllSettlements()");
         return settlementService.getAllSettlements();
     }
 
     @GetMapping("/settlements/{id}")
-    public SettlementDto getSettlementById(@PathVariable("id") Long id) {
+    public Settlement8086Dto getSettlementById(@PathVariable("id") Long id) {
     	log.debug("getSettlementById()");
         return settlementService.getSettlementById(id);
     }
@@ -43,9 +43,9 @@ public class SettlementController {
     }
 	*/
     @PutMapping("/settlements/{id}")
-    public SettlementDto updateSettlement(@PathVariable("id") Long id, @RequestBody SettlementDto settlementDto) {
+    public Settlement8086Dto updateSettlement(@PathVariable("id") Long id, @RequestBody Settlement8086Dto settlement8086Dto) {
     	log.debug("updateSettlement()");
-        return settlementService.updateSettlement(id, settlementDto);
+        return settlementService.updateSettlement(id, settlement8086Dto);
     }
 
     @DeleteMapping("/settlements/{id}")
@@ -55,7 +55,7 @@ public class SettlementController {
     }
     
     @GetMapping("/helpers/{id}/settlements")
-    public List<SettlementDto> getHelperettlements(@PathVariable("id") Long id) {
+    public List<Settlement8086Dto> getHelperettlements(@PathVariable("id") Long id) {
     	log.debug("getUserSettlements()");
         return settlementService.getHelperSettlements(id);
     }

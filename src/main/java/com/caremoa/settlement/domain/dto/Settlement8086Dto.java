@@ -2,7 +2,7 @@ package com.caremoa.settlement.domain.dto;
 
 import java.time.LocalDateTime;
 
-import com.caremoa.settlement.domain.model.Settlement;
+import com.caremoa.settlement.domain.model.Settlement8086;
 import com.caremoa.settlement.domain.model.SettlementState;
 
 import lombok.AllArgsConstructor;
@@ -20,10 +20,10 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-public class SettlementDto {
+public class Settlement8086Dto {
 
     private Long id;
-    private ContractDto contract;
+    private Contract8086Dto contract;
     private SettlementState settlementState;
     private Integer settledAmount;
 	private LocalDateTime requestedDateTime;
@@ -31,8 +31,8 @@ public class SettlementDto {
 	private LocalDateTime paidDateTime;
 	private String memberId;
 	
-	public Settlement toEntity() {
-		Settlement settlement = new Settlement();
+	public Settlement8086 toEntity() {
+		Settlement8086 settlement = new Settlement8086();
 		settlement.setId(this.id);
 		settlement.setContract(this.contract.toEntity());
 		settlement.setSettlementState(this.settlementState);

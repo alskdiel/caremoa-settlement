@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.caremoa.settlement.domain.dto.SettlementDto;
+import com.caremoa.settlement.domain.dto.Settlement8086Dto;
 
 @FeignClient(name = "payment", url = "http://localhost:8099/") // Feign Client 설정
 public interface SettlementFeignClient {

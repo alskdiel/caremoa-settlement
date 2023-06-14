@@ -48,9 +48,9 @@ spring:
           group: contract
           destination: caremoa-topic
           content-type: application/json
-        basicProducer-out-0:
-          destination: caremoa-topic
-          content-type: application/json
+        #basicProducer-out-0:
+        #  destination: caremoa-topic
+        #  content-type: application/json
 
 server:
   port: 8085

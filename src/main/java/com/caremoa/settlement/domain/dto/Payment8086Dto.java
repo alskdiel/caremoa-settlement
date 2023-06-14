@@ -2,7 +2,7 @@ package com.caremoa.settlement.domain.dto;
 
 import java.time.LocalDateTime;
 
-import com.caremoa.settlement.domain.model.Payment;
+import com.caremoa.settlement.domain.model.Payment8086;
 import com.caremoa.settlement.domain.model.PaymentMethod;
 import com.caremoa.settlement.domain.model.PaymentRequestState;
 import com.caremoa.settlement.domain.model.PaymentType;
@@ -22,10 +22,10 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-public class PaymentDto {
+public class Payment8086Dto {
 
     private Long id;
-    private ContractDto contract;
+    private Contract8086Dto contract;
     private PaymentType paymentType;
     private PaymentMethod paymentMethod;
     private PaymentRequestState paymentRequestState; 
@@ -34,8 +34,8 @@ public class PaymentDto {
 	private LocalDateTime responseDateTime;
 	private String approveNo;
 	
-	public Payment toEntity() {
-		Payment payment = new Payment();
+	public Payment8086 toEntity() {
+		Payment8086 payment = new Payment8086();
 		payment.setId(this.id);
 		payment.setContract(this.contract.toEntity());
 		payment.setPaymentType(this.paymentType);

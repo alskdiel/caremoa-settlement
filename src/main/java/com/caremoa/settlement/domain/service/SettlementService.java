@@ -8,13 +8,13 @@ import java.util.stream.Collectors;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.caremoa.settlement.domain.dto.ContractDto;
-import com.caremoa.settlement.domain.dto.PaymentDto;
-import com.caremoa.settlement.domain.dto.SettlementDto;
-import com.caremoa.settlement.domain.model.Contract;
+import com.caremoa.settlement.domain.dto.Contract8086Dto;
+import com.caremoa.settlement.domain.dto.Payment8086Dto;
+import com.caremoa.settlement.domain.dto.Settlement8086Dto;
+import com.caremoa.settlement.domain.model.Contract8086;
 import com.caremoa.settlement.domain.model.PaymentRequestState;
 import com.caremoa.settlement.domain.model.PaymentType;
-import com.caremoa.settlement.domain.model.Settlement;
+import com.caremoa.settlement.domain.model.Settlement8086;
 import com.caremoa.settlement.domain.model.SettlementState;
 import com.caremoa.settlement.domain.repository.ContractRepository;
 import com.caremoa.settlement.domain.repository.SettlementRepository;
@@ -30,25 +30,25 @@ public class SettlementService {
 	private final SettlementRepository settlementRepository;
 	private final ContractRepository contractRepository;
 
-    public List<SettlementDto> getAllSettlements() {
-        List<Settlement> settlements = settlementRepository.findAll();
-        return settlements.stream().map(Settlement::toDto).collect(Collectors.toList());
+    public List<Settlement8086Dto> getAllSettlements() {
+        List<Settlement8086> settlements = settlementRepository.findAll();
+        return settlements.stream().map(Settlement8086::toDto).collect(Collectors.toList());
     }
 
-    public SettlementDto getSettlementById(Long id) {
-        Settlement settlement = settlementRepository.findById(id)
+    public Settlement8086Dto getSettlementById(Long id) {
+        Settlement8086 settlement = settlementRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Settlement not found with id: " + id));
         return settlement.toDto();
     }
     
-    public SettlementDto createSettlement(List<PaymentDto> paymentsDto) {
-    	SettlementDto settlementDto = new SettlementDto();
+    public Settlement8086Dto createSettlement(List<Payment8086Dto> paymentsDto) {
+    	Settlement8086Dto settlementDto = new Settlement8086Dto();
     	
-    	ContractDto contractDto = paymentsDto.get(0).getContract();
+    	Contract8086Dto contractDto = paymentsDto.get(0).getContract();
 		SettlementState settlementState = SettlementState.CREATED;
 		Integer settledAmount = 0;
 		
-    	for(PaymentDto paymentDto : paymentsDto) {
+    	for(Payment8086Dto paymentDto : paymentsDto) {
     		PaymentType pType = paymentDto.getPaymentType();
     		if(paymentDto.getPaymentRequestState() == PaymentRequestState.APPROVED) {
     			if(pType == PaymentType.NORMAL) {
@@ -63,7 +63,7 @@ public class SettlementService {
     	settlementDto.setSettlementState(settlementState);
     	settlementDto.setSettledAmount(settledAmount);
     	
-    	Settlement savedSettlement = settlementRepository.save(settlementDto.toEntity());
+    	Settlement8086 savedSettlement = settlementRepository.save(settlementDto.toEntity());
     	return savedSettlement.toDto();
     }
     
@@ -75,8 +75,8 @@ public class SettlementService {
         return savedSettlement.toDto();
     }
 */
-    public SettlementDto updateSettlement(Long id, SettlementDto settlementDto) {
-        Settlement existingSettlement = settlementRepository.findById(id)
+    public Settlement8086Dto updateSettlement(Long id, Settlement8086Dto settlementDto) {
+        Settlement8086 existingSettlement = settlementRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Settlement not found with id: " + id));
         existingSettlement.setContract(settlementDto.getContract().toEntity());
         
@@ -94,7 +94,7 @@ public class SettlementService {
         		break;
         }
         existingSettlement.setSettlementState(nextSettlementState);
-        Settlement updatedSettlement = settlementRepository.save(existingSettlement);
+        Settlement8086 updatedSettlement = settlementRepository.save(existingSettlement);
         return updatedSettlement.toDto();
     }
 
@@ -102,16 +102,16 @@ public class SettlementService {
         settlementRepository.deleteById(id);
     }
 
-    public List<SettlementDto> getHelperSettlements(Long id) {
-        List<Settlement> settlements = new ArrayList<Settlement>();
-        List<Contract> contract = contractRepository.findByHelperId(id);
-        for(Contract c : contract) {
-        	List<Settlement> cSettlements = c.getSettlements();
-        	for(Settlement p : cSettlements) {
+    public List<Settlement8086Dto> getHelperSettlements(Long id) {
+        List<Settlement8086> settlements = new ArrayList<Settlement8086>();
+        List<Contract8086> contract = contractRepository.findByHelperId(id);
+        for(Contract8086 c : contract) {
+        	List<Settlement8086> cSettlements = c.getSettlements();
+        	for(Settlement8086 p : cSettlements) {
         		settlements.add(p);
         	}
         }
-        return settlements.stream().map(Settlement::toDto).collect(Collectors.toList());
+        return settlements.stream().map(Settlement8086::toDto).collect(Collectors.toList());
                 
     }
 

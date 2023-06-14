@@ -8,8 +8,8 @@ import java.util.function.Consumer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.caremoa.settlement.domain.dto.ContractDto;
-import com.caremoa.settlement.domain.dto.PaymentDto;
+import com.caremoa.settlement.domain.dto.Contract8086Dto;
+import com.caremoa.settlement.domain.dto.Payment8086Dto;
 import com.caremoa.settlement.domain.model.PaymentMethod;
 import com.caremoa.settlement.domain.model.PaymentRequestState;
 import com.caremoa.settlement.domain.model.PaymentType;
@@ -37,12 +37,6 @@ public class PolicyHandler {
 			log.debug(mapData.toString());
 			
 			switch (mapData.get("eventType").toString()) {
-				case "ContractAccepted":
-					ContractAccepted contractAccepted = mapper.convertValue(mapData, ContractAccepted.class);
-					log.debug("contractCompleted : {}", contractAccepted.toString());
-	    			createContract(contractAccepted.getContractId(), contractAccepted.getMemberId(), contractAccepted.getHelperId());
-					break;
-					
 				case "ContractCompleted":
 					ContractCompleted contractCompleted = mapper.convertValue(mapData, ContractCompleted.class);
 					log.debug("contractCompleted : {}", contractCompleted.toString());
@@ -51,6 +45,7 @@ public class PolicyHandler {
 				case "PaymentCompleted":
 					PaymentCompleted paymentCompleted = mapper.convertValue(mapData, PaymentCompleted.class);
 					log.debug("paymentCompleted : {}", paymentCompleted.toString());
+					createContract(paymentCompleted.getContract());
 	    			createPayment(paymentCompleted.getId(), paymentCompleted.getContract(), paymentCompleted.getPaymentType(),
 	    					paymentCompleted.getPaymentMethod(), paymentCompleted.getPaymentRequestState(), paymentCompleted.getRequestDateTime(),
 	    					paymentCompleted.getRequestAmount(), paymentCompleted.getResponseDateTime(), paymentCompleted.getApproveNo());
@@ -72,7 +67,7 @@ public class PolicyHandler {
     private void createSettlement(Long id) {
     	try {
     		log.debug("ReflectionScore {}, {}, {}", id);
-    		List<PaymentDto> paymentsDto = paymentService.getPaymentsByContractId(id);
+    		List<Payment8086Dto> paymentsDto = paymentService.getPaymentsByContractId(id);
     		settlementService.createSettlement(paymentsDto);
     		
 		} catch (Exception e) {
@@ -88,10 +83,9 @@ public class PolicyHandler {
      * @description   : 점수반영
      * @param paymentId
     */
-    private void createContract(Long id, Long memberId, Long helperId) {
+    private void createContract(Contract8086Dto contractDto) {
     	try {
-    		log.debug("ReflectionScore {}, {}, {}", id, memberId, helperId);
-    		ContractDto contractDto = new ContractDto(id, memberId, helperId);
+    		log.debug("ReflectionScore {}, {}, {}", contractDto);
     		contractService.createContract(contractDto);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -105,11 +99,11 @@ public class PolicyHandler {
      * @description   : 점수반영
      * @param paymentId
     */
-    private void createPayment(Long id, ContractDto contract, PaymentType paymentType, PaymentMethod paymentMethod, PaymentRequestState paymentRequestState,
+    private void createPayment(Long id, Contract8086Dto contract, PaymentType paymentType, PaymentMethod paymentMethod, PaymentRequestState paymentRequestState,
     		LocalDateTime requestDateTime, Integer requestAmount, LocalDateTime responseDateTime, String approveNo) {
     	try {
     		log.debug("ReflectionScore {}, {}, {}", id, contract, paymentType, paymentMethod, paymentRequestState, requestDateTime, requestAmount, responseDateTime, approveNo);
-    		PaymentDto paymentDto = new PaymentDto(id, contract, paymentType, paymentMethod, paymentRequestState, requestDateTime, requestAmount, responseDateTime, approveNo);
+    		Payment8086Dto paymentDto = new Payment8086Dto(id, contract, paymentType, paymentMethod, paymentRequestState, requestDateTime, requestAmount, responseDateTime, approveNo);
     		paymentService.createPayment(paymentDto);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
