@@ -29,9 +29,7 @@ public class Payment8086Dto {
     private PaymentType paymentType;
     private PaymentMethod paymentMethod;
     private PaymentRequestState paymentRequestState; 
-	private LocalDateTime requestDateTime;
 	private Integer requestAmount;
-	private LocalDateTime responseDateTime;
 	private String approveNo;
 	
 	public Payment8086 toEntity() {
@@ -41,9 +39,7 @@ public class Payment8086Dto {
 		payment.setPaymentType(this.paymentType);
 		payment.setPaymentMethod(this.paymentMethod);
 		payment.setPaymentRequestState(this.paymentRequestState);
-		payment.setRequestDateTime(this.requestDateTime);
 		payment.setRequestAmount(this.requestAmount);
-		payment.setResponseDateTime(this.responseDateTime);
 		payment.setApproveNo(this.approveNo);
 		return payment;
 	}

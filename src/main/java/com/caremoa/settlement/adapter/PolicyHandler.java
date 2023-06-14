@@ -47,8 +47,8 @@ public class PolicyHandler {
 					log.debug("paymentCompleted : {}", paymentCompleted.toString());
 					createContract(paymentCompleted.getContract());
 	    			createPayment(paymentCompleted.getId(), paymentCompleted.getContract(), paymentCompleted.getPaymentType(),
-	    					paymentCompleted.getPaymentMethod(), paymentCompleted.getPaymentRequestState(), paymentCompleted.getRequestDateTime(),
-	    					paymentCompleted.getRequestAmount(), paymentCompleted.getResponseDateTime(), paymentCompleted.getApproveNo());
+	    					paymentCompleted.getPaymentMethod(), paymentCompleted.getPaymentRequestState(),
+	    					paymentCompleted.getRequestAmount(), paymentCompleted.getApproveNo());
 					break;
 				default: // 처리가 정의되지 않은 이벤트
 					log.debug("Undefined EventType : {}", mapData.get("eventType").toString());
@@ -100,10 +100,10 @@ public class PolicyHandler {
      * @param paymentId
     */
     private void createPayment(Long id, Contract8086Dto contract, PaymentType paymentType, PaymentMethod paymentMethod, PaymentRequestState paymentRequestState,
-    		LocalDateTime requestDateTime, Integer requestAmount, LocalDateTime responseDateTime, String approveNo) {
+    		Integer requestAmount, String approveNo) {
     	try {
-    		log.debug("ReflectionScore {}, {}, {}", id, contract, paymentType, paymentMethod, paymentRequestState, requestDateTime, requestAmount, responseDateTime, approveNo);
-    		Payment8086Dto paymentDto = new Payment8086Dto(id, contract, paymentType, paymentMethod, paymentRequestState, requestDateTime, requestAmount, responseDateTime, approveNo);
+    		log.debug("ReflectionScore {}, {}, {}", id, contract, paymentType, paymentMethod, paymentRequestState, requestAmount, approveNo);
+    		Payment8086Dto paymentDto = new Payment8086Dto(id, contract, paymentType, paymentMethod, paymentRequestState, requestAmount, approveNo);
     		paymentService.createPayment(paymentDto);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

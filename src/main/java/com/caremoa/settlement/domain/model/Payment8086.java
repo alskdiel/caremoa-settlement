@@ -46,9 +46,7 @@ public class Payment8086 {
 	@Enumerated(EnumType.STRING)
 	private PaymentRequestState paymentRequestState;
 	
-	private LocalDateTime requestDateTime;
 	private Integer requestAmount;
-	private LocalDateTime responseDateTime;
 	private String approveNo;
 
 	public Payment8086Dto toDto() {
@@ -58,9 +56,7 @@ public class Payment8086 {
 		paymentDto.setPaymentType(this.paymentType);
 		paymentDto.setPaymentMethod(this.paymentMethod);
 		paymentDto.setPaymentRequestState(this.paymentRequestState);
-		paymentDto.setRequestDateTime(this.requestDateTime);
 		paymentDto.setRequestAmount(this.requestAmount);
-		paymentDto.setResponseDateTime(this.responseDateTime);
 		paymentDto.setApproveNo(this.approveNo);
 		return paymentDto;
 	}
