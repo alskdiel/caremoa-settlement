@@ -7,12 +7,9 @@ metadata:
 spec:
     ports:
     - port: 8086
-      targetPort: 80
+      targetPort: 8086
       protocol: TCP
       name: http
-    - port: 443
-      protocol: TCP
-      name: https
     selector:
         run: settlement
     type: LoadBalancer 
