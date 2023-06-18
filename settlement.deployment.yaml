@@ -16,6 +16,6 @@ spec:
         spec:
             containers:
             - name: settlement
-              image: hyeonjaecho/settlement:v1.1
+              image: hyeonjaecho/settlement
               ports:
               - containerPort: 8086
