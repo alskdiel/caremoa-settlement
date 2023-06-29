@@ -1,7 +1,6 @@
 #database: h2 
 #database: mysql
 
-
 spring:
   application:
     name: settlement
