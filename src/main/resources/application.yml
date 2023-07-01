@@ -91,7 +91,7 @@ spring:
         
       bindings:
         basicConsumer-in-0:
-          group: contract
+          group: settlement
           destination: caremoa-topic
           content-type: application/json
         #basicProducer-out-0:
