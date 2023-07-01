@@ -10,7 +10,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ContractCompleted extends AbstractEvent{
 	private Long contractId;
-
+	private Long memberId;
+	private String memberName;
+	private Long helperId;
+	private String helperName;
+	private String helperJobType;
+	private String targetName;
+	private String careRange;
+	private String contractStatus;
+	private String timestamp;
+	
 	@Builder
 	public ContractCompleted(Long contractId) {
 		super();
