@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.caremoa.settlement.domain.dto.Contract8086Dto;
 import com.caremoa.settlement.domain.dto.Payment8086Dto;
 import com.caremoa.settlement.domain.dto.Settlement8086Dto;
+import com.caremoa.settlement.domain.dto.SettlementResDto;
 import com.caremoa.settlement.domain.model.Contract8086;
 import com.caremoa.settlement.domain.model.PaymentRequestState;
 import com.caremoa.settlement.domain.model.PaymentType;
@@ -30,9 +31,9 @@ public class SettlementService {
 	private final SettlementRepository settlementRepository;
 	private final ContractRepository contractRepository;
 
-    public List<Settlement8086Dto> getAllSettlements() {
+    public List<SettlementResDto> getAllSettlements() {
         List<Settlement8086> settlements = settlementRepository.findAll();
-        return settlements.stream().map(Settlement8086::toDto).collect(Collectors.toList());
+        return settlements.stream().map(Settlement8086::toResDto).collect(Collectors.toList());
     }
 
     public Settlement8086Dto getSettlementById(Long id) {
@@ -45,7 +46,7 @@ public class SettlementService {
     	Settlement8086Dto settlementDto = new Settlement8086Dto();
     	
     	Contract8086Dto contractDto = paymentsDto.get(0).getContract();
-		SettlementState settlementState = SettlementState.CREATED;
+		SettlementState settlementState = SettlementState.REQUESTED;
 		Integer settledAmount = 0;
 		
     	for(Payment8086Dto paymentDto : paymentsDto) {
@@ -82,7 +83,7 @@ public class SettlementService {
         
         SettlementState settlementState = settlementDto.getSettlementState();
         SettlementState nextSettlementState = SettlementState.REQUESTED;
-        switch(settlementState) {
+        switch(settlementState) {        
         	case REQUESTED :
         		nextSettlementState = SettlementState.APPROVED;
                 settlementDto.setApprovedDateTime(LocalDateTime.now());

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.caremoa.settlement.domain.dto.Settlement8086Dto;
+import com.caremoa.settlement.domain.dto.SettlementResDto;
 import com.caremoa.settlement.domain.service.SettlementService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class SettlementController {
 
 
     @GetMapping("/settlements")
-    public List<Settlement8086Dto> getAllSettlements() {
+    public List<SettlementResDto> getAllSettlements() {
     	log.debug("getAllSettlements()");
         return settlementService.getAllSettlements();
     }
@@ -37,7 +38,7 @@ public class SettlementController {
     }
     /*
     @PostMapping("/settlements")
-    public SettlementDto createSettlement(@RequestBody SettlementDto settlementDto) {
+    public Settlement8086Dto createSettlement(@RequestBody Settlement8086Dto settlementDto) {
     	log.debug("createSettlement()");
         return settlementService.createSettlement(settlementDto);
     }

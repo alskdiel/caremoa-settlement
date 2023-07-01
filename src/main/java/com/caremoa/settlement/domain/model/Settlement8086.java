@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.caremoa.settlement.domain.dto.Settlement8086Dto;
+import com.caremoa.settlement.domain.dto.SettlementResDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,6 +47,19 @@ public class Settlement8086 {
 		Settlement8086Dto settlementDto = new Settlement8086Dto();
 		settlementDto.setId(this.id);
 		settlementDto.setContract(this.contract.toDto());
+		settlementDto.setSettlementState(this.settlementState);
+		settlementDto.setSettledAmount(this.settledAmount);
+		settlementDto.setRequestedDateTime(this.requestedDateTime);
+		settlementDto.setApprovedDateTime(this.approvedDateTime);
+		settlementDto.setPaidDateTime(this.paidDateTime);
+		settlementDto.setMemberId(this.memberId);
+		return settlementDto;
+	}
+	
+	public SettlementResDto toResDto() {
+		SettlementResDto settlementDto = new SettlementResDto();
+		settlementDto.setId(this.id);
+		settlementDto.isetContract(this.contract.toDto());
 		settlementDto.setSettlementState(this.settlementState);
 		settlementDto.setSettledAmount(this.settledAmount);
 		settlementDto.setRequestedDateTime(this.requestedDateTime);

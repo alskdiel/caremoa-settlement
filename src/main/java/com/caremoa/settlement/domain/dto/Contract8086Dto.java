@@ -23,7 +23,15 @@ public class Contract8086Dto {
     private Long memberId;
     private Long helperId;
     private String helperName;
-	
+
+	@Builder
+	public Contract8086Dto(Long id, String helperName) {
+		super();
+		this.id = id; 
+		this.helperName = helperName; 
+		
+	}
+
 	public Contract8086 toEntity() {
 		Contract8086 contract = new Contract8086();
 		contract.setId(this.id);
