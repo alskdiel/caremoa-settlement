@@ -99,6 +99,34 @@ public class SettlementService {
         return updatedSettlement.toDto();
     }
 
+    
+    public SettlementResDto updateSettlementStatus(SettlementResDto settlementDto) {
+        Settlement8086 existingSettlement = settlementRepository.findById(settlementDto.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Settlement not found with id: " + settlementDto.getId()));
+        
+        SettlementState settlementState = existingSettlement.getSettlementState();
+        SettlementState nextSettlementState = SettlementState.REQUESTED;
+        switch(settlementState) {        
+        	case REQUESTED :
+        		nextSettlementState = SettlementState.APPROVED;
+                settlementDto.setApprovedDateTime(LocalDateTime.now());
+                existingSettlement.setApprovedDateTime(LocalDateTime.now());
+                existingSettlement.setMemberId(settlementDto.getMemberId());
+        		break;
+        	case APPROVED :
+        		nextSettlementState = SettlementState.PAID;
+                settlementDto.setPaidDateTime(LocalDateTime.now());
+                existingSettlement.setPaidDateTime(LocalDateTime.now());
+        		break;
+        }
+        existingSettlement.setSettlementState(nextSettlementState);
+        Settlement8086 updatedSettlement = settlementRepository.save(existingSettlement);
+        return updatedSettlement.toResDto();
+    }
+
+    
+    
+    
     public void deleteSettlement(Long id) {
         settlementRepository.deleteById(id);
     }

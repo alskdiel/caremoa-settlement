@@ -48,6 +48,12 @@ public class SettlementController {
     	log.debug("updateSettlement()");
         return settlementService.updateSettlement(id, settlement8086Dto);
     }
+    
+    @PutMapping("/settlements-status")
+    public SettlementResDto updateSettlement(@RequestBody SettlementResDto settlement8086Dto) {
+    	log.debug("updateSettlement()");
+        return settlementService.updateSettlementStatus(settlement8086Dto);
+    }
 
     @DeleteMapping("/settlements/{id}")
     public void deleteSettlement(@PathVariable("id") Long id) {
