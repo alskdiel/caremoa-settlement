@@ -27,7 +27,7 @@ public class PaymentService {
         Payment8086 savedPayment = paymentRepository.save(paymentDto.toEntity());
         return savedPayment.toDto();
 	}
-	
+	@Transactional
     public List<Payment8086Dto> getPaymentsByContractId(Long id) {
         List<Payment8086> payments = contractRepository.findById(id).get().getPayments();
         return payments.stream().map(Payment8086::toDto).collect(Collectors.toList());
